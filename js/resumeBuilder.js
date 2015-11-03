@@ -23,16 +23,20 @@ var education = {
         "name": "Universitaet Siegen",
         "location": "Siegen, Germany",
         "degree": "Diplom",
-        "major": "Business Administration"
+        "subject": "Business Administration"
+            //I went to school in Germany. When I studied, studies in humanities, 
+            //had the concept of major and minor, the degree was a M.A.
+            //For science, technology and business, degree was a "Diplom", no major and minor
+            //just one subject. (The system has changed to Bachelor and Master since then.)
+
     }, {
         "name": "Universitaet Anhalt",
         "location": "Koethen, Germany",
         "degree": "Diplom (FH)",
-        "major": "Computer Science"
+        "subject": "Computer Science"
     }]
+
 };
-
-
 
 
 var projects = {
@@ -85,7 +89,9 @@ var work = {
 
 //Displaying work
 
-function displayWork() {
+work.display = function() {
+
+
 
     for (var job in work.jobs) {
 
@@ -107,10 +113,9 @@ function displayWork() {
     }
 }
 
-displayWork();
 
+work.display();
 
-//Displaying eduction
 
 education.display = function()
 
@@ -126,11 +131,12 @@ education.display = function()
         var formattedDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
         $(".education-entry:last").append(formattedDegree);
 
-        var formattedMajor = HTMLschoolMajor.replace("%data%", education.schools[school].major);
-        $(".education-entry:last").append(formattedMajor);
+        var formattedSubject = HTMLschoolMajor.replace("%data%", education.schools[school].subject);
+        $(".education-entry:last").append(formattedSubject);
 
     }
 }
+
 
 education.display();
 
@@ -163,75 +169,72 @@ projects.display = function()
     }
 }
 
+
+
 projects.display();
 
-// Get variables for Role and Name
-
-var formattedRole = HTMLheaderRole.replace("%data%", (bio.role));
-var formattedName = HTMLheaderName.replace("%data%", (bio.name));
 
 
-
-//Display Role and Name
-
-
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
-
-//Get variables for contact data and picture
-var formattedMobile = HTMLmobile.replace("%data%", (bio.contacts.mobile));
-var formattedGithub = HTMLgithub.replace("%data%", (bio.contacts.github));
-var formattedEmail = HTMLemail.replace("%data%", (bio.contacts.email));
-var formattedLocation = HTMLlocation.replace("%data%", (bio.contacts.location));
-var formattedWelcome = HTMLwelcomeMsg.replace("%data%", (bio.welcome));
-
-var HTMLbioPic = HTMLbioPic.replace("%data%", (bio.bioPic));
+bio.display = function() {
 
 
-//Display contact information
+    //  Role, Name and Picture
+    var formattedRole = HTMLheaderRole.replace("%data%", (bio.role));
+    $("#header").prepend(formattedRole);
+    var formattedName = HTMLheaderName.replace("%data%", (bio.name));
+    $("#header").prepend(formattedName);
+    var formattedbioPic = HTMLbioPic.replace("%data%", (bio.bioPic));
+    $("#header").append(formattedbioPic);
 
-$("#topContacts").prepend(formattedMobile);
-$("#topContacts").prepend(formattedEmail);
-$("#topContacts").prepend(formattedGithub);
-$("#topContacts").prepend(formattedLocation);
+    //Skills
+
+    if (bio.skills.length > 0)
 
 
-//Display picture
+    {
+        $("#header").append(HTMLskillsStart);
+        //append HTMLskillstart
 
-$("#header").append(HTMLbioPic);
+        var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
+        $("#skills").append(formattedSkill);
 
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[1]);
 
+        $("#skills").append(formattedSkill);
+        //var formattedSkill is created by taking HTMLSkills and calling .replace. Replace data placehoder with the second in the list.
+        //Append that list to the page
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[2]);
+        $("#skills").append(formattedSkill);
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
+        $("#skills").append(formattedSkill);
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[4]);
+        $("#skills").append(formattedSkill);
+    }
 
-//Get variable for skills and display skills
+    //Summary
+    var formattedSummary = HTMLsummary.replace("%data%", (bio.hello));
+    $("#skills").append(formattedSummary);
 
-if (bio.skills.length > 0)
-//if length of skills array is > 0
+    //Contacts
+    var formattedMobile = HTMLmobile.replace("%data%", (bio.contacts.mobile));
+    $("#topContacts").prepend(formattedMobile);
+    var formattedGithub = HTMLgithub.replace("%data%", (bio.contacts.github));
+    $("#topContacts").prepend(formattedGithub);
+    var formattedEmail = HTMLemail.replace("%data%", (bio.contacts.email));
+    $("#topContacts").prepend(formattedEmail);
+    var formattedLocation = HTMLlocation.replace("%data%", (bio.contacts.location));
+    $("#topContacts").prepend(formattedLocation);
 
-{
-    $("#header").append(HTMLskillsStart);
-    //append HTMLskillstart
+    //Linkedin
+    var formattedLinkedin = HTMLLinkedin.replace("%data%", bio.linkedin);
+    $("#footerContacts").append(formattedLinkedin);
 
-    var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
-    $("#skills").append(formattedSkill);
-
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[1]);
-
-    $("#skills").append(formattedSkill);
-    //var formattedSkill is created by taking HTMLSkills and calling .replace. Replace data placehoder with the second in the list.
-    //Append that list to the page
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[2]);
-    $("#skills").append(formattedSkill);
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
-    $("#skills").append(formattedSkill);
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[4]);
-    $("#skills").append(formattedSkill);
 }
 
+bio.display();
 
-//Display summary
 
-var formattedSummary = HTMLsummary.replace("%data%", (bio.hello));
-$("#skills").append(formattedSummary);
+
 
 //Display Google Map
 $("#mapDiv").append(googleMap);
@@ -248,10 +251,6 @@ $("#mapDiv").append(googleMap);
 //return name[0] + " "+name[1];
 //}
 
-//Linkedin
-
-var formattedLinkedin = HTMLLinkedin.replace("%data%", bio.linkedin);
-$("#footerContacts").append(formattedLinkedin);
 
 
 //$("#main").append(internationalizeButton);
